@@ -176,7 +176,9 @@ public class OrderController {
         try {
             String classPath = System.getProperty("java.class.path");
             Path codeLocation = Path.of(classPath.split(java.io.File.pathSeparator)[0]);
-            String java = Path.of(System.getProperty("java.home"), "bin", "java").toString();
+            String javaExecutable = System.getProperty("os.name", "").toLowerCase(java.util.Locale.ROOT).contains("win")
+                    ? "java.exe" : "java";
+            String java = Path.of(System.getProperty("java.home"), "bin", javaExecutable).toString();
             String url = "http://127.0.0.1:" + serverPort + "/events";
             loadMetricsFile = Path.of(System.getProperty("java.io.tmpdir"), "sse-load-" + UUID.randomUUID() + ".json");
             String targetText = Integer.toString(target);
